@@ -1,5 +1,7 @@
-import connectDB from './database/dbConnection.js';
+import connectDB from './src/database/dbConnection.js';
 import express from 'express';
+import scrapeData from './src/scrapers/scrapeData.js';
+import dailyWhalesDataWriter from './src/services/dailyWhalesDataWriter.js';
 
 
 const app = express();
@@ -28,6 +30,9 @@ app.get('/ultimo-registro', async (req, res) => {
     res.status(500).send('Error al obtener el último registro');
   }
 });
+
+
+await dailyWhalesDataWriter()
 
   
 
