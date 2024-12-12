@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: simutrade_mySql
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node app
+    runtime: node
+    nodeVersion: 20
