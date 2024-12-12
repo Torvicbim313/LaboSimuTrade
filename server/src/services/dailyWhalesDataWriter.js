@@ -39,6 +39,7 @@ const dailyWhalesDataWriter = async () => {
     console.log("Registro insertado:", result);
   } catch (error) {
     console.error("Error al insertar los datos en la base de datos:", error);
+    dailyWhalesDataWriter()
   }
 };
 

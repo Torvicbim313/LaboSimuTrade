@@ -2,6 +2,7 @@ import connectDB from './src/database/dbConnection.js';
 import express from 'express';
 import scrapeData from './src/scrapers/scrapeData.js';
 import dailyWhalesDataWriter from './src/services/dailyWhalesDataWriter.js';
+import { startdailyWhalesDataWriter } from './src/utils/startDailyWhalesDifference.js';
 
 
 const app = express();
@@ -33,6 +34,8 @@ app.get('/ultimo-registro', async (req, res) => {
 
 
 await dailyWhalesDataWriter()
+
+startdailyWhalesDataWriter()
 
   
 
