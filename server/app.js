@@ -5,9 +5,16 @@ import dailyWhalesDataWriter from './src/services/dailyWhalesDataWriter.js';
 import { startdailyWhalesDataWriter } from './src/utils/startDailyWhalesDifference.js';
 import whalesDataAndPricesRoutes from '../server/routes/whalesDataAndPricesRoutes.js'
 import axios from 'axios';
+import cors from 'cors';
 
 
 const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static('client'));
+
+
 const port = process.env.PORT || 3300;
 
 
@@ -16,26 +23,9 @@ app.get('/', (req, res) => {
   res.send('Simutrade MySQL working');
 });
 
-app.use(express.json());
 app.use('/api/whales-data', whalesDataAndPricesRoutes);
 
 app.listen(port, () => console.log(`Servidor escuchando en el puerto ${port}`));
-
-// app.get('/ultimo-registro', async (req, res) => {
-//   const query = 'SELECT * FROM trading_data ORDER BY ID DESC LIMIT 1';
-
-//   try {
-//     // Llama a la función connectDB para obtener la conexión o el pool
-//     const db = await connectDB();
-//     // Usa el método query para ejecutar la consulta
-//     const [results] = await db.query(query);
-//     console.log('Último registro:', results);
-//     res.json(results); // Envía el resultado como JSON
-//   } catch (error) {
-//     console.error('Error al obtener el último registro:', error);
-//     res.status(500).send('Error al obtener el último registro');
-//   }
-// });
 
 
 await dailyWhalesDataWriter()
