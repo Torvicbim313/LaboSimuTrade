@@ -4,6 +4,7 @@ import scrapeData from './src/scrapers/scrapeData.js';
 import dailyWhalesDataWriter from './src/services/dailyWhalesDataWriter.js';
 import { startdailyWhalesDataWriter } from './src/utils/startDailyWhalesDifference.js';
 import whalesDataAndPricesRoutes from '../server/routes/whalesDataAndPricesRoutes.js'
+import axios from 'axios';
 
 
 const app = express();
