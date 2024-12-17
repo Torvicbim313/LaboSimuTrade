@@ -39,6 +39,7 @@ export default {
 
                 const data = await response.json()
                 console.log(data)
+                data.forEach(element => element.FECHA = element.FECHA.replace('T',' ').replace('.000Z', ''));
 
                 this.whalesData = data.reverse();
 
