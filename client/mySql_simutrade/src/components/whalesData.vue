@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="sticky top-0 bg-white shadow-md p-2 grid grid-cols-5 gap-8 border-b-2 border-gray-300">
+        <div class="sticky top-0 bg-white shadow-md z-10 p-2 grid grid-cols-5 gap-8 border-b-2 border-gray-300">
             <h3 class="font-bold">Fecha</h3>
-            <h3 class="font-bold">BTC</h3>
-            <h3 class="font-bold">Diferencia</h3>
-            <h3 class="font-bold">Precio Compra</h3>
+            <h3 class="font-bold ml-40">BTC</h3>
+            <h3 class="font-bold ml-20">Diferencia</h3>
+            <h3 class="font-bold ml-10">Precio Compra</h3>
             <h3 class="font-bold">Precio Venta</h3>
           </div>
         <ul class="grid grid-cols-1 gap-2">
