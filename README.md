@@ -8,6 +8,7 @@
 - **Trading Simulation:** Implements and visualizes strategies.
 - **REST API:** Provides endpoints for data access.
 - **Frontend:** Displays data and graphs (under development).
+- **Production URL:** [SimuTrade](https://simutradesql.netlify.app)
 
 ## Prerequisites
 

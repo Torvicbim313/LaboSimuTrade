@@ -40,7 +40,7 @@ export default {
                 const data = await response.json()
                 console.log(data)
 
-                this.whalesData = data
+                this.whalesData = data.reverse();
 
             } catch (error) {
                 console.error(error)
