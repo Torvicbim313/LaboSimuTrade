@@ -1,6 +1,5 @@
 <template>
     <div>
-       <h1>HOme</h1>
        <WhalesData/> 
     </div>
 </template>
