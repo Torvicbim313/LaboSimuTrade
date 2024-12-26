@@ -17,7 +17,7 @@
   
       const fetchData = async () => {
         try {
-          const response = await fetch("https://simutrade-mysql.onrender.com/api/whales-data/all");
+          const response = await fetch("https://labosimutrade-1.onrender.com/api/whales-data/all");
           const data = await response.json();
   
           // Extrae las etiquetas y valores de los datos

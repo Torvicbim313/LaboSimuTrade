@@ -45,7 +45,7 @@ const pingInterval = 5 * 60 * 1000; // Intervalo de ping en milisegundos (5 minu
 setInterval(async () => {
   try {
     // Realiza una solicitud de ping interno a tu propia aplicación
-    const response = await axios.get('https://simutrade-mysql.onrender.com/ping'); // Ajusta la URL según tu configuración
+    const response = await axios.get('https://labosimutrade-1.onrender.com/ping'); // Ajusta la URL según tu configuración
     if (response.status === 200 && response.data === 'Ping OK') {
       console.log('Ping interno exitoso. La aplicación está activa.');
     } else {
