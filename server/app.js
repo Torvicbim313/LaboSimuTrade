@@ -3,9 +3,10 @@ import express from 'express';
 import scrapeData from './src/scrapers/scrapeData.js';
 import dailyWhalesDataWriter from './src/services/dailyWhalesDataWriter.js';
 import { startdailyWhalesDataWriter } from './src/utils/startDailyWhalesDifference.js';
-import whalesDataAndPricesRoutes from '../server/routes/whalesDataAndPricesRoutes.js'
+import whalesDataAndPricesRoutes from './src/routes/whalesDataAndPricesRoutes.js'
 import axios from 'axios';
 import cors from 'cors';
+import updateLastRecord from './src/services/updateLastRecord.js';
 
 
 const app = express();
@@ -28,7 +29,7 @@ app.use('/api/whales-data', whalesDataAndPricesRoutes);
 app.listen(port, () => console.log(`Servidor escuchando en el puerto ${port}`));
 
 
-await dailyWhalesDataWriter()
+// await dailyWhalesDataWriter()
 
 startdailyWhalesDataWriter()
 

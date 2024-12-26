@@ -3,7 +3,7 @@ import models from '../models/index.js';
 export const getAllWhalesAndPricesData = async (req, res) => {
   try {
     const data = await models.whalesDataAndPrices.getAll();
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -15,8 +15,20 @@ export const getPaginatedWhalesAndPricesData = async (req, res) => {
 
   try {
     const data = await models.whalesDataAndPrices.getPaginated(parseInt(offset), parseInt(limit));
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const updateByIdWhalesAndPricesData = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const updateData = req.body;
+
+    await whalesDataAndPrices.updateById(id, updateData);
+    res.status(200).json({message: "Updated record succesfully"})
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
+}

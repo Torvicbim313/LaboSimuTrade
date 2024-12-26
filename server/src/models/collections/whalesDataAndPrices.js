@@ -23,6 +23,25 @@ class whalesDataAndPrices {
       throw new Error(`Error al obtener los datos paginados: ${error.message}`);
     }
   }
+
+  static async updateById(id, data) {
+    const query = "UPDATE trading_data SET ? WHERE ID = ?";
+    try {
+      await db.query(query, [data, id]);
+    } catch (error) {
+      throw new Error(`Error al actualizar el registro: ${error.message}`);
+    }
+  }
+
+  static async getLast() {
+    const query = "SELECT * FROM trading_data ORDER BY ID DESC LIMIT 1";
+    try {
+      const [rows] = await db.query(query);
+      return rows[0]; // Devuelve solo el último registro
+    } catch (error) {
+      throw new Error(`Error al obtener el último registro: ${error.message}`);
+    }
+  }
 }
 
 export default whalesDataAndPrices

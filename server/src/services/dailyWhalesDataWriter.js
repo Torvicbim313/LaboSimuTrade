@@ -2,6 +2,7 @@ import scrapeData from "../scrapers/scrapeData.js";
 import { quoteToBuy } from "../scrapers/uniswap-v3-buy-price/libs/quote-buy.js";
 import { quoteToSell } from "../scrapers/uniswap-v3-sell-price/libs/quote-sell.js";
 import connectDB from "../database/dbConnection.js";
+import updateLastRecord from "./updateLastRecord.js";
 
 const dailyWhalesDataWriter = async () => {
   try {
@@ -35,6 +36,8 @@ const dailyWhalesDataWriter = async () => {
       buyPriceWbtcUniSdk,
       sellPriceWbtcUniSdk,
     ]);
+
+    await updateLastRecord();
 
     console.log("Registro insertado:", result);
   } catch (error) {
