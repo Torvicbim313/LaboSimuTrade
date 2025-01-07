@@ -16,7 +16,7 @@ const dbConfig = {
 // Crear conexión
 const connectDB = async () => {
   try {
-    const connection = await mysql.createPool(dbConfig);
+    const connection = mysql.createPool(dbConfig);
     console.log('Conexión exitosa a la base de datos DE AIVEN.');
     return connection;
   } catch (error) {
