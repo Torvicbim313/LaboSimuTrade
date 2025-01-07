@@ -17,6 +17,7 @@ const highSellSignal = async (currentSlice = null) => {
                      LIMIT 7`;
       const [rows] = await db.query(query);
       data = rows.reverse(); // Asegúrate de que los datos estén en orden cronológico
+      console.log("DATA HIGSELLLLLLL",data[data.length -1])
     }
 
     if (data.length < 5) {
@@ -25,28 +26,51 @@ const highSellSignal = async (currentSlice = null) => {
 
     // Estructura los datos en un formato manejable
     const historicalData = {
-      today: data[data.length - 1],
-      yesterday: data[data.length - 2],
-      twoDaysAgo: data[data.length - 3],
-      threeDaysAgo: data[data.length - 4],
-      fourDaysAgo: data[data.length - 5],
+      today: {
+        difference: parseFloat(data[data.length - 1].DIFERENCIA),
+        wbtcBuyPrice: parseFloat(data[data.length - 1].PRECIO_COMPRA),
+        wbtcSellPrice: parseFloat(data[data.length - 1].PRECIO_VENTA),
+      },
+      yesterday: {
+        difference: parseFloat(data[data.length - 2].DIFERENCIA),
+        wbtcBuyPrice: parseFloat(data[data.length - 2].PRECIO_COMPRA),
+        wbtcSellPrice: parseFloat(data[data.length - 2].PRECIO_VENTA),
+      },
+      twoDaysAgo: {
+        difference: parseFloat(data[data.length - 3].DIFERENCIA),
+        wbtcBuyPrice: parseFloat(data[data.length - 3].PRECIO_COMPRA),
+        wbtcSellPrice: parseFloat(data[data.length - 3].PRECIO_VENTA),
+      },
+      threeDaysAgo: {
+        difference: parseFloat(data[data.length - 4].DIFERENCIA),
+        wbtcBuyPrice: parseFloat(data[data.length - 4].PRECIO_COMPRA),
+        wbtcSellPrice: parseFloat(data[data.length - 4].PRECIO_VENTA),
+      },
+      fourDaysAgo: {
+        difference: parseFloat(data[data.length - 5].DIFERENCIA),
+        wbtcBuyPrice: parseFloat(data[data.length - 5].PRECIO_COMPRA),
+        wbtcSellPrice: parseFloat(data[data.length - 5].PRECIO_VENTA),
+      },
     };
+    
 
     // Calcular los precios promedio
     const wbtcAvgPrices = [
-      (historicalData.fourDaysAgo.PRECIO_COMPRA + historicalData.fourDaysAgo.PRECIO_VENTA) / 2,
-      (historicalData.threeDaysAgo.PRECIO_COMPRA + historicalData.threeDaysAgo.PRECIO_VENTA) / 2,
-      (historicalData.twoDaysAgo.PRECIO_COMPRA + historicalData.twoDaysAgo.PRECIO_VENTA) / 2,
-      (historicalData.yesterday.PRECIO_COMPRA + historicalData.yesterday.PRECIO_VENTA) / 2,
-      (historicalData.today.PRECIO_COMPRA + historicalData.today.PRECIO_VENTA) / 2,
+      (parseFloat(historicalData.fourDaysAgo.wbtcBuyPrice) + parseFloat(historicalData.fourDaysAgo.wbtcSellPrice)) / 2,
+      (parseFloat(historicalData.threeDaysAgo.wbtcBuyPrice) + parseFloat(historicalData.threeDaysAgo.wbtcSellPrice)) / 2,
+      (parseFloat(historicalData.twoDaysAgo.wbtcBuyPrice) + parseFloat(historicalData.twoDaysAgo.wbtcSellPrice)) / 2,
+      (parseFloat(historicalData.yesterday.wbtcBuyPrice) + parseFloat(historicalData.yesterday.wbtcSellPrice)) / 2,
+      (parseFloat(historicalData.today.wbtcBuyPrice) + parseFloat(historicalData.today.wbtcSellPrice)) / 2,
     ];
+    // console.log("Promedios de precios WBTC:", wbtcAvgPrices);
+
 
     // Función para calcular las pendientes
     const calculateSlope = (data) => {
       const slopes = [];
       for (let i = 1; i < data.length; i++) {
-        const y1 = data[i - 1];
-        const y2 = data[i];
+        const y1 = parseFloat(data[i - 1]);
+        const y2 = parseFloat(data[i]);
         const slope = ((y2 - y1) / y1) * 100;
         slopes.push(slope);
       }
@@ -54,6 +78,9 @@ const highSellSignal = async (currentSlice = null) => {
     };
 
     const averageSlopes = calculateSlope(wbtcAvgPrices);
+
+    // console.log("Pendientes calculadas:", averageSlopes);
+
 
     // Calcular las pendientes promedio para cada rampa
     const calculateAverageSlope = (data) => {
@@ -86,11 +113,22 @@ const highSellSignal = async (currentSlice = null) => {
     const averageFirstDaysSlope = calculateAverageSlope(firstDaysSlopes);
     const averageLastDaysSlope = calculateAverageSlope(lastDaysSlopes);
 
-    return (
-      averageFirstDaysSlope > 0 &&
-      rampsDecelerating &&
-      historicalData.today.DIFERENCIA < 0
-    );
+    // console.log("DATOS DEL RETURN:  ",{
+    //   averageFirstDaysSlope,
+    //   averageRamp6,
+    //   averageLastDaysSlope,
+    //   rampsDecelerating,
+    //   DIFERENCIA: historicalData.today.difference,
+    // });
+
+    // return (
+    //   averageFirstDaysSlope > 0 &&
+    //   rampsDecelerating &&
+    //   historicalData.today.DIFERENCIA < 0
+    // );
+
+    return  averageFirstDaysSlope > 0 && averageRamp6 < averageFirstDaysSlope && historicalData.today.difference < 0  || averageRamp6 < - 0.75 && averageFirstDaysSlope < -0.25 && historicalData.today.difference < 0;
+
   } catch (error) {
     console.error("Error al procesar datos para la señal de venta:", error);
     return false; // Devuelve false si hay un error
@@ -109,6 +147,7 @@ const backtest = async () => {
                    ORDER BY ID ASC`;
 
     const [rows] = await db.query(query);
+    console.log("DATABASE EN BACKKKKKK",rows[rows.length - 1])
     const sellDates = [];
 
     // Comienza desde la quinta fila (índice 4) y usa ventanas de 7 filas
@@ -118,6 +157,8 @@ const backtest = async () => {
 
       // Llama a la función highSellSignal con los datos de la ventana actual
       const shouldSell = await highSellSignal(currentSlice);
+      //  console.log("Evaluando currentSlice:", currentSlice);
+      //  console.log("Resultado de shouldSell:", shouldSell);
 
       if (shouldSell) {
         console.log(`Se debería vender en ${rows[i].FECHA}`);
@@ -141,8 +182,8 @@ const backtest = async () => {
 
 
 //Esto es para ejecutar el backtest cuando llamas al modulo
-const sellDates = await backtest();
-console.log('Fechas señal venta modo ALTA FRECUENCIA:', sellDates);
+// const sellDates = await backtest();
+// console.log('Fechas señal venta modo ALTA FRECUENCIA:', sellDates, "y su longitud: ", sellDates.length);
 
 
 
