@@ -9,7 +9,7 @@
           </div>
         <ul class="grid grid-cols-1 gap-2">
             <li v-for="record in whalesData" :key="record.record_id">
-              <div :class="record.VENTA ? 'bg-blue-500' : ''" @click="sendToggleFeaturedEmisor(record.record_id)" class="p-2 flex flex-row justify-between gap-8 w-[100%] h-[100%] rounded-xl bg-slate-100 shadow-2xl border-2 border-purple-300 overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105">
+              <div :class="record.VENTA ? 'bg-blue-500' : ' bg-slate-100'" @click="sendToggleFeaturedEmisor(record.record_id)" class="p-2 flex flex-row justify-between gap-8 w-[100%] h-[100%] rounded-xl shadow-2xl border-2 border-purple-300 overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105">
                 <h3>{{ record.FECHA }}</h3>
                 <h3 class="text-emerald-700 font-extrabold text-xl">{{record.BTC}}</h3>
                 <h3>{{ record.DIFERENCIA }}</h3>
