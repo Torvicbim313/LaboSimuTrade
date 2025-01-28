@@ -9,6 +9,9 @@
           <li class="pt-4">
             <RouterLink to="/chart" class="text-emerald-500 font-bold text-2xl hover:text-indigo-600">Gráfica</RouterLink>
           </li>
+          <li class="pt-4">
+            <RouterLink to="/afternoons2_2" class="text-emerald-500 font-bold text-2xl hover:text-indigo-600">afternoons2_2</RouterLink>
+          </li>
         </ul>
       </nav>
 </template>
