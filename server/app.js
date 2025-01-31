@@ -1,9 +1,11 @@
 import express from 'express';
-import { startdailyWhalesDataWriter } from './src/utils/startDailyWhalesDifference.js';
+import { startdailyWhalesDataWriter, startdailyWhalesDataWriterAfternoons } from './src/utils/startDailyWhalesDifference.js';
 import whalesDataAndPricesRoutes from './src/routes/whalesDataAndPricesRoutes.js'
 import afternoons2_2Route from './src/routes/afternoons2_2Route.js';
 import axios from 'axios';
 import cors from 'cors';
+import { eventEmitter } from './src/utils/eventEmitter.js';
+import sellListeners from './src/services/actions/listeners/sellListeners.js';
 
 
 const app = express();
@@ -30,7 +32,14 @@ app.listen(port, () => console.log(`Servidor escuchando en el puerto ${port}`));
 
 // await dailyWhalesDataWriter()
 
-startdailyWhalesDataWriter()
+startdailyWhalesDataWriter();
+
+startdailyWhalesDataWriterAfternoons();
+
+sellListeners();
+
+// eventEmitter.emit('highTradeSignal',103000)
+
 
 
 app.get('/ping', (req, res) => {
