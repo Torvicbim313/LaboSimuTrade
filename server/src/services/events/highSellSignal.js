@@ -1,4 +1,4 @@
-import connectDB from "../database/dbConnection.js";
+import connectDB from "../../database/dbConnection.js";
 
 const db = await connectDB();
 

@@ -1,10 +1,12 @@
 import scrapeData from "../scrapers/scrapeData.js";
 import { quoteToBuy } from "../scrapers/uniswap-v3-buy-price/libs/quote-buy.js";
 import { quoteToSell } from "../scrapers/uniswap-v3-sell-price/libs/quote-sell.js";
-import connectDB from "../database/dbConnection.js";
+import connectDB from "../../database/dbConnection.js";
 import updateLastRecord from "./updateLastRecord.js";
+import highSellSignal from "../events/highSellSignal.js";
+import { eventEmitter } from "../../utils/eventEmitter.js";
 
-const dailyWhalesDataWriter = async () => {
+const dailyWhalesDataWriterAfternoons = async () => {
   try {
     const scrapedData = await scrapeData();
     const [dataBtc] = scrapedData;
@@ -16,7 +18,7 @@ const dailyWhalesDataWriter = async () => {
 
     // Obtén el último valor de BTC de la base de datos
     const [lastRecord] = await db.query(
-      "SELECT BTC FROM trading_data ORDER BY ID DESC LIMIT 1"
+      "SELECT BTC FROM trading_data_afternoons ORDER BY ID DESC LIMIT 1"
     );
 
     const lastBtcValue = lastRecord?.[0]?.BTC || 0; // Si no hay registros previos, usa 0
@@ -24,7 +26,7 @@ const dailyWhalesDataWriter = async () => {
 
     // Inserta el nuevo registro en la base de datos
     const query = `
-      INSERT INTO trading_data (FECHA, BTC, DIFERENCIA, PRECIO_COMPRA, PRECIO_VENTA)
+      INSERT INTO trading_data_afternoons (FECHA, BTC, DIFERENCIA, PRECIO_COMPRA, PRECIO_VENTA)
       VALUES (?, ?, ?, ?, ?)
     `;
     const fecha = new Date().toISOString().slice(0, 19).replace("T", " ");
@@ -39,11 +41,16 @@ const dailyWhalesDataWriter = async () => {
 
     await updateLastRecord();
 
+    const highTradeSignal = await highSellSignal();
+
+    highTradeSignal ? eventEmitter.emit('highTradeSignal', parseFloat(sellPriceWbtcUniSdk)) : eventEmitter.emit('noSellHighSignal');
+
+
     console.log("Registro insertado:", result);
   } catch (error) {
     console.error("Error al insertar los datos en la base de datos:", error);
-    dailyWhalesDataWriter()
+    dailyWhalesDataWriterAfternoons()
   }
 };
 
-export default dailyWhalesDataWriter;
+export default dailyWhalesDataWriterAfternoons;

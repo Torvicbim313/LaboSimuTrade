@@ -1,5 +1,5 @@
-import whalesDataAndPrices from "../models/collections/whalesDataAndPrices.js";
-import highSellSignal from "./highSellSignal.js";
+import whalesDataAndPrices from "../../models/collections/whalesDataAndPrices.js";
+import highSellSignal from "../events/highSellSignal.js";
 
 const updateLastRecord = async () => {
   try {
