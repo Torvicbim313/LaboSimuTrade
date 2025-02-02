@@ -3,8 +3,8 @@ import { quoteToBuy } from "../scrapers/uniswap-v3-buy-price/libs/quote-buy.js";
 import { quoteToSell } from "../scrapers/uniswap-v3-sell-price/libs/quote-sell.js";
 import connectDB from "../../database/dbConnection.js";
 import updateLastRecord from "./updateLastRecord.js";
-import highSellSignal from "../events/highSellSignal.js";
 import { eventEmitter } from "../../utils/eventEmitter.js";
+import highSellSignalAfternoons from "../events/highSellSignalAfternoons.js";
 
 const dailyWhalesDataWriterAfternoons = async () => {
   try {
@@ -41,7 +41,7 @@ const dailyWhalesDataWriterAfternoons = async () => {
 
     await updateLastRecord();
 
-    const highTradeSignal = await highSellSignal();
+    const highTradeSignal = await highSellSignalAfternoons();
 
     highTradeSignal ? eventEmitter.emit('highTradeSignal', parseFloat(sellPriceWbtcUniSdk)) : eventEmitter.emit('noSellHighSignal');
 
