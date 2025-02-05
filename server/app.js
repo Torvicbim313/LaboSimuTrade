@@ -6,6 +6,7 @@ import axios from 'axios';
 import cors from 'cors';
 import { eventEmitter } from './src/utils/eventEmitter.js';
 import sellListeners from './src/services/actions/listeners/sellListeners.js';
+import buyListeners from './src/services/actions/listeners/buyListeners.js';
 
 
 const app = express();
@@ -37,6 +38,8 @@ startdailyWhalesDataWriter();
 startdailyWhalesDataWriterAfternoons();
 
 sellListeners();
+
+buyListeners();
 
 // eventEmitter.emit('highTradeSignal',103000)
 
