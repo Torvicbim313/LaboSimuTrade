@@ -1,8 +1,10 @@
-import connectDB from "../../../../../../../database/dbConnection.js";
+import pool from "../../../../../../../database/dbConnection.js";
 
 const sellAfternoons2_2 = async () => {
+
+  const db = await pool.getConnection();
+  
   try {
-    const db = await connectDB();
 
     // Obtener el último valor de BTC de '2_2tardes_ballenas'
     const [btcAmountResult] = await db.query(
@@ -55,7 +57,9 @@ const sellAfternoons2_2 = async () => {
 
   } catch (error) {
     console.error('Error intentando vender y registrar en 2_2tardes_ballenas:', error);
-  }
+  } finally {
+    db.release();  // IMPORTANTE: liberar la conexión después de usarla
+}
 };
 
 export default sellAfternoons2_2;

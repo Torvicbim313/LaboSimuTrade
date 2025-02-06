@@ -1,8 +1,10 @@
-import connectDB from "../../../../../../../database/dbConnection.js";
+import pool from "../../../../../../../database/dbConnection.js";
 
 const stopLossAfternoons2_2 = async (amountToBuy, buyPrice, sellPrice) => {
+
+  const db = await pool.getConnection();
+  
     try {
-        const db = await connectDB();
 
         const [whalesAmountResult] = await db.query(
             "SELECT BTC FROM trading_data_afternoons ORDER BY id DESC LIMIT 1"
@@ -31,7 +33,9 @@ const stopLossAfternoons2_2 = async (amountToBuy, buyPrice, sellPrice) => {
 
     } catch (error) {
         console.error("Error intentando comprar en perdidas en stopLossAfternoons2_2: ",error)
-    }
+    } finally {
+      db.release();  // IMPORTANTE: liberar la conexión después de usarla
+  }
 }
 
 export default stopLossAfternoons2_2;

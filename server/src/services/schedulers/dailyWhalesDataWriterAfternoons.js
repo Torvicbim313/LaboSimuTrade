@@ -1,12 +1,15 @@
 import scrapeData from "../scrapers/scrapeData.js";
 import { quoteToBuy } from "../scrapers/uniswap-v3-buy-price/libs/quote-buy.js";
 import { quoteToSell } from "../scrapers/uniswap-v3-sell-price/libs/quote-sell.js";
-import connectDB from "../../database/dbConnection.js";
+import pool from "../../database/dbConnection.js";
 import updateLastRecord from "./updateLastRecord.js";
 import { eventEmitter } from "../../utils/eventEmitter.js";
 import highSellSignalAfternoons from "../events/highSellSignalAfternoons.js";
 
 const dailyWhalesDataWriterAfternoons = async () => {
+
+  const db = await pool.getConnection();
+  
   try {
     const scrapedData = await scrapeData();
     const [dataBtc] = scrapedData;
@@ -14,7 +17,6 @@ const dailyWhalesDataWriterAfternoons = async () => {
     const buyPriceWbtcUniSdk = await quoteToBuy();
     const sellPriceWbtcUniSdk = await quoteToSell();
 
-    const db = await connectDB();
 
     // Obtén el último valor de BTC de la base de datos
     const [lastRecord] = await db.query(
@@ -50,7 +52,9 @@ const dailyWhalesDataWriterAfternoons = async () => {
   } catch (error) {
     console.error("Error al insertar los datos en la base de datos:", error);
     dailyWhalesDataWriterAfternoons()
-  }
+  } finally {
+    db.release();  // IMPORTANTE: liberar la conexión después de usarla
+}
 };
 
 export default dailyWhalesDataWriterAfternoons;
