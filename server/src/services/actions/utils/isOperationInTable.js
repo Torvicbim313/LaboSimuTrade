@@ -1,8 +1,9 @@
-import connectDB from "../../../database/dbConnection.js";
+import pool from "../../../database/dbConnection.js";
+
+const db = await pool.getConnection();
 
 const isOperationInTable = async (tableName) => {
   try {
-    const db = await connectDB();
     const [rows] = await db.query(
       `SELECT accion FROM ?? ORDER BY id DESC LIMIT 1`, 
       [tableName]
@@ -12,7 +13,9 @@ const isOperationInTable = async (tableName) => {
   } catch (error) {
     console.error(`Error obteniendo la última acción de la tabla ${tableName}:`, error);
     return null;
-  }
+  } finally {
+    db.release();  // IMPORTANTE: liberar la conexión después de usarla
+}
 };
 
 export default isOperationInTable;

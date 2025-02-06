@@ -1,6 +1,6 @@
-import connectDB from "../../database/dbConnection.js";
+import pool from "../../database/dbConnection.js";
 
-const db = await connectDB();
+const db = await pool.getConnection();;
 
 const highSellSignal = async (currentSlice = null) => {
   try {
@@ -132,7 +132,9 @@ const highSellSignal = async (currentSlice = null) => {
   } catch (error) {
     console.error("Error al procesar datos para la señal de venta:", error);
     return false; // Devuelve false si hay un error
-  }
+  } finally {
+    db.release();  // IMPORTANTE: liberar la conexión después de usarla
+}
 };
 
 
@@ -175,7 +177,9 @@ const backtest = async () => {
   } catch (error) {
     console.error("Error en el backtesting:", error);
     return [];
-  }
+  } finally {
+    db.release();  // IMPORTANTE: liberar la conexión después de usarla
+}
 };
 
 

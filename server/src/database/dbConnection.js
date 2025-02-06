@@ -10,11 +10,14 @@ const dbConfig = {
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,  // Máximo de conexiones simultáneas
+  queueLimit: 0
 };
 
 // Crear conexión
-const connectDB = async () => {
+const DBconnection = async () => {
   try {
     const connection = mysql.createPool(dbConfig);
     console.log('Conexión exitosa a la base de datos DE AIVEN.');
@@ -25,4 +28,7 @@ const connectDB = async () => {
   }
 };
 
-export default connectDB;
+const pool = mysql.createPool(dbConfig);
+
+export default pool;
+

@@ -1,6 +1,6 @@
-import connectDB from "../../database/dbConnection.js";
+import pool from "../../database/dbConnection.js";
 
-const db = await connectDB();
+const db = await pool.getConnection();;
 
 
 class whalesDataAndPrices {
@@ -11,7 +11,9 @@ class whalesDataAndPrices {
       return rows;
     } catch (error) {
       throw new Error(`Error al obtener los datos: ${error.message}`);
-    }
+    } finally {
+      db.release();  // IMPORTANTE: liberar la conexión después de usarla
+  }
   }
 
   static async getPaginated(offset, limit) {
@@ -21,7 +23,9 @@ class whalesDataAndPrices {
       return rows;
     } catch (error) {
       throw new Error(`Error al obtener los datos paginados: ${error.message}`);
-    }
+    } finally {
+      db.release();  // IMPORTANTE: liberar la conexión después de usarla
+  }
   }
 
   static async updateById(id, data) {
@@ -30,7 +34,9 @@ class whalesDataAndPrices {
       await db.query(query, [data, id]);
     } catch (error) {
       throw new Error(`Error al actualizar el registro: ${error.message}`);
-    }
+    } finally {
+      db.release();  // IMPORTANTE: liberar la conexión después de usarla
+  }
   }
 
   static async getLast() {
@@ -40,7 +46,9 @@ class whalesDataAndPrices {
       return rows[0]; // Devuelve solo el último registro
     } catch (error) {
       throw new Error(`Error al obtener el último registro: ${error.message}`);
-    }
+    } finally {
+      db.release();  // IMPORTANTE: liberar la conexión después de usarla
+  }
   }
 }
 
