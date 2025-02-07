@@ -1,11 +1,12 @@
 import pool from "../../database/dbConnection.js";
 
-const db = await pool.getConnection();;
 
 
 class afternoons2_2 {
+
   static async getAll() {
     const query = 'SELECT * FROM 2_2tardes_ballenas';
+    const db = await pool.getConnection();;
     try {
       const [rows] = await db.query(query);
       return rows;
