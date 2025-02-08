@@ -1,10 +1,10 @@
 import pool from "../../database/dbConnection.js";
 
-const db = await pool.getConnection();;
 
 
 class whalesDataAndPrices {
   static async getAll() {
+    const db = await pool.getConnection();;
     const query = 'SELECT * FROM trading_data';
     try {
       const [rows] = await db.query(query);
@@ -17,6 +17,7 @@ class whalesDataAndPrices {
   }
 
   static async getPaginated(offset, limit) {
+    const db = await pool.getConnection();;
     const query = 'SELECT * FROM trading_data ORDER BY ID DESC LIMIT ? OFFSET ?';
     try {
       const [rows] = await db.query(query, [limit, offset]);
@@ -29,6 +30,7 @@ class whalesDataAndPrices {
   }
 
   static async updateById(id, data) {
+    const db = await pool.getConnection();;
     const query = "UPDATE trading_data SET ? WHERE ID = ?";
     try {
       await db.query(query, [data, id]);
@@ -40,6 +42,7 @@ class whalesDataAndPrices {
   }
 
   static async getLast() {
+    const db = await pool.getConnection();;
     const query = "SELECT * FROM trading_data ORDER BY ID DESC LIMIT 1";
     try {
       const [rows] = await db.query(query);
