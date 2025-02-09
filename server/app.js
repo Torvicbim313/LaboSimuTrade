@@ -1,6 +1,7 @@
 import express from 'express';
 import { startdailyWhalesDataWriter, startdailyWhalesDataWriterAfternoons } from './src/utils/startDailyWhalesDifference.js';
 import whalesDataAndPricesRoutes from './src/routes/whalesDataAndPricesRoutes.js'
+import whalesDataAndPricesAfternoonsRoutes from './src/routes/whalesDataAndPricesAfternoonsRoutes.js'
 import afternoons2_2Route from './src/routes/afternoons2_2Route.js';
 import axios from 'axios';
 import cors from 'cors';
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/whales-data', whalesDataAndPricesRoutes);
+app.use('/api/whales-data-afternoons', whalesDataAndPricesAfternoonsRoutes);
 app.use('/api/2_2afternoons', afternoons2_2Route);
 
 
