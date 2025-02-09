@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import WhalesDataAfternoons from '../components/whalesDataAfternoons.vue';
+import WhalesDataAfternoons from '../components/WhalesDataAfternoons.vue';
 export default {
     name : "TableAfternoons",
     components: { WhalesDataAfternoons }
