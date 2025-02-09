@@ -1,13 +1,13 @@
 <template>
     <div>
-       <WhalesData/> 
+       <CryptoTradingLab/> 
     </div>
 </template>
 <script>
-import WhalesData from '../components/whalesData.vue'
+import CryptoTradingLab from '../components/CryptoTradingLab.vue';
 export default {
     name : "Home",
-    components: { WhalesData }
+    components: { CryptoTradingLab }
 }
 </script>
 
