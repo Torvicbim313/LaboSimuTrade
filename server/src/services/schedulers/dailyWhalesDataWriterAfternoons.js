@@ -2,9 +2,9 @@ import scrapeData from "../scrapers/scrapeData.js";
 import { quoteToBuy } from "../scrapers/uniswap-v3-buy-price/libs/quote-buy.js";
 import { quoteToSell } from "../scrapers/uniswap-v3-sell-price/libs/quote-sell.js";
 import pool from "../../database/dbConnection.js";
-import updateLastRecord from "./updateLastRecord.js";
 import { eventEmitter } from "../../utils/eventEmitter.js";
 import highSellSignalAfternoons from "../events/highSellSignalAfternoons.js";
+import updateLastRecordAfternoons from "./updateLastRecordAfternoons.js";
 
 const dailyWhalesDataWriterAfternoons = async () => {
 
@@ -44,11 +44,13 @@ const dailyWhalesDataWriterAfternoons = async () => {
       sellPriceWbtcUniSdk,
     ]);
 
-    await updateLastRecord();
+    await updateLastRecordAfternoons();
 
     const highTradeSignal = await highSellSignalAfternoons();
 
     highTradeSignal ? eventEmitter.emit('highTradeSignal', parseFloat(sellPriceWbtcUniSdk)) : eventEmitter.emit('noSellHighSignal');
+    // highTradeSignal ? eventEmitter.emit('noSellHighSignal') : eventEmitter.emit('highTradeSignal', parseFloat(sellPriceWbtcUniSdk)) 
+
 
 
     console.log("Registro insertado:", result);

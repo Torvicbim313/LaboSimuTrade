@@ -33,13 +33,15 @@ const buyAfternoons2_2 = async () => {
         const sellPriceBtcUni = await quoteToSell()
         console.log("PRECIO VENTA WBTC",sellPriceBtcUni)
 
-        const usdtToNumber = parseFloat(usdt)
+        const usdtToNumber = parseFloat(usdt); // Convertimos a número primero
+        const usdtRounded = parseFloat(usdtToNumber.toFixed(6));
         console.log("QUE VALOR???", usdtToNumber)
 
-        const btcItCanPurchase = parseFloat(await quoteToBuy(usdtToNumber))
+        const btcItCanPurchase = parseFloat(await quoteToBuy(usdtRounded))
         console.log("CUANTOS BTC PODRIA COMPRAR", btcItCanPurchase)
 
-        const previousWbtcAmount = parseFloat(btc);
+        const previousWbtcToNumber = parseFloat(btc);
+        const previousWbtcAmount = parseFloat(previousWbtcToNumber.toFixed(6));
         console.log("WBTC PREVIOS: ", previousWbtcAmount)
 
         const green = "\x1b[32m";
