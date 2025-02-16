@@ -82,7 +82,9 @@ export const startdailyWhalesDataWriter = () => {
 
 // Lanzar dailyWhalesDataWriterAfternoons a las 5:13 PM (17:13)
 export const startdailyWhalesDataWriterAfternoons = () => {
-  const timeUntilAfternoon = calculateTimeUntilTarget(17, 13);
+  // const timeUntilAfternoon = calculateTimeUntilTarget(17, 13);
+  const timeUntilAfternoon = calculateTimeUntilTarget(17, 50);
+
 
   setTimeout(() => {
     dailyWhalesDataWriterAfternoons();

@@ -1,9 +1,12 @@
 import pool from "../../database/dbConnection.js";
 
-const db = await pool.getConnection();;
 
 const highSellSignalAfternoons = async (currentSlice = null) => {
+  let db;
   try {
+
+    db = await pool.getConnection();
+
     let data;
 
     if (currentSlice) {
@@ -142,7 +145,11 @@ const highSellSignalAfternoons = async (currentSlice = null) => {
 
 
 const backtest = async () => {
+  let db;
   try {
+
+    db = await pool.getConnection();
+
     // Consulta para obtener todos los datos ordenados por ID
     const query = `SELECT ID, FECHA, DIFERENCIA, PRECIO_COMPRA, PRECIO_VENTA 
                    FROM trading_data_afternoons 

@@ -8,9 +8,12 @@ import highSellSignalAfternoons from "../events/highSellSignalAfternoons.js";
 
 const dailyWhalesDataWriterAfternoons = async () => {
 
-  const db = await pool.getConnection();
+  let db;
   
   try {
+    db = await pool.getConnection();
+
+
     const scrapedData = await scrapeData();
     const [dataBtc] = scrapedData;
     const numericDataBtc = parseFloat(dataBtc);

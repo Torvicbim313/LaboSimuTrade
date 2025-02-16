@@ -8,9 +8,12 @@ import { eventEmitter } from "../../utils/eventEmitter.js";
 
 const dailyWhalesDataWriter = async () => {
 
-  const db = await pool.getConnection();
+  let db;
   
   try {
+    db = await pool.getConnection();
+
+
     const scrapedData = await scrapeData();
     const [dataBtc] = scrapedData;
     const numericDataBtc = parseFloat(dataBtc);
