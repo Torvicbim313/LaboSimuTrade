@@ -48,7 +48,7 @@ const dailyWhalesDataWriter = async () => {
 
     const highTradeSignal = await highSellSignal();
 
-    highTradeSignal ? eventEmitter.emit('highTradeSignal', parseFloat(sellPriceWbtcUniSdk)) : eventEmitter.emit('noSellHighSignal');
+    highTradeSignal ? eventEmitter.emit('highTradeSignalMornings', parseFloat(sellPriceWbtcUniSdk)) : eventEmitter.emit('noSellHighSignal');
 
 
     console.log("Registro insertado:", result);
