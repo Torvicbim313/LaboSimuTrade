@@ -37,8 +37,10 @@ const buyAfternoons2_2 = async () => {
         const usdtRounded = parseFloat(usdtToNumber.toFixed(6));
         console.log("QUE VALOR???", usdtToNumber)
 
-        const btcItCanPurchase = parseFloat(await quoteToBuy(usdtRounded))
-        console.log("CUANTOS BTC PODRIA COMPRAR", btcItCanPurchase)
+        const gasCostBtc = 0; // Ejemplo: costo de gas en BTC (ajusta según tu estimación)
+
+        const btcItCanPurchase = parseFloat(await quoteToBuy(usdtRounded)) * 0.997 - gasCostBtc;
+        console.log("CUANTOS BTC PODRIA COMPRAR (con comisión y gas)", btcItCanPurchase)
 
         const previousWbtcToNumber = parseFloat(btc);
         const previousWbtcAmount = parseFloat(previousWbtcToNumber.toFixed(6));

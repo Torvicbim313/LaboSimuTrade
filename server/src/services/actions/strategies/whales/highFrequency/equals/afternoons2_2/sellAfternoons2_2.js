@@ -18,8 +18,11 @@ const sellAfternoons2_2 = async () => {
     );
     const btcSellPrice = btcSellPriceResult.length ? parseFloat(btcSellPriceResult[0].PRECIO_VENTA) : 0;
 
+    const gasCostUsdt = 0; // Ajusta este valor cuando estimes el gas real
+
     // Calcular el USDT después de la venta
-    const usdtAfterSell = btcAmount * btcSellPrice;
+    const usdtAfterSell = btcAmount * btcSellPrice * 0.997 - gasCostUsdt;
+    console.log("USDT después de vender (con comisión y gas):", usdtAfterSell);
 
     // Obtener la fecha actual en formato SQL
     const formattedDate = new Date().toISOString().slice(0, 19).replace("T", " ");
