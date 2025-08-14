@@ -9,6 +9,7 @@ import { eventEmitter } from './src/utils/eventEmitter.js';
 import sellListeners from './src/services/actions/listeners/sellListeners.js';
 import buyListeners from './src/services/actions/listeners/buyListeners.js';
 import scrapeStrategicEthReserve from './src/services/scrapers/scrapeStrategicEthReserve.js';
+import showGasPrice from './src/services/scrapers/etherGas/etherGas.js';
 
 
 const app = express();
@@ -32,6 +33,10 @@ app.use('/api/2_2afternoons', afternoons2_2Route);
 
 
 app.listen(port, () => console.log(`Servidor escuchando en el puerto ${port}`));
+
+
+// console.log("sacando el precio del gas de la red Ethereum...");
+// showGasPrice();
 
 // const ethReserve = await scrapeStrategicEthReserve()
 

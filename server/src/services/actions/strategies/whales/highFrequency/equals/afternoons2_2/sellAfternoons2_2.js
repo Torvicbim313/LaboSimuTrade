@@ -1,4 +1,12 @@
 import pool from "../../../../../../../database/dbConnection.js";
+import pkg from "ethers";
+import { getProvider } from "../../../../../../scrapers/uniswap-v3-buy-price/libs/providers.js";
+import { quoteToSellWeth } from "../../../../../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
+
+const { utils } = pkg;
+const { formatUnits } = utils;
+
+const provider = getProvider();
 
 const sellAfternoons2_2 = async () => {
 
@@ -18,10 +26,18 @@ const sellAfternoons2_2 = async () => {
     );
     const btcSellPrice = btcSellPriceResult.length ? parseFloat(btcSellPriceResult[0].PRECIO_VENTA) : 0;
 
-    const gasCostUsdt = 0; // Ajusta este valor cuando estimes el gas real
+    // --- Cálculo del gas ---
+    const gasLimit = 150000; // Un swap típico en Uniswap
+    const gasPrice = await provider.getGasPrice(); // En wei
+    const gasCostEth = Number(formatUnits((BigInt(gasPrice.toString()) * BigInt(gasLimit)).toString(), "ether"));
 
-    // Calcular el USDT después de la venta
-    const usdtAfterSell = btcAmount * btcSellPrice * 0.997 - gasCostUsdt;
+    // Debes obtener el precio actual de ETH en USDC dinámicamente, aquí lo pongo fijo como ejemplo:
+    const ethPriceUsdc = parseFloat(await quoteToSellWeth()); // Reemplaza por tu función real
+
+    const gasCostUsdc = gasCostEth * ethPriceUsdc;
+
+    // Calcular el USDT después de la venta (con comisión y gas)
+    const usdtAfterSell = btcAmount * btcSellPrice * 0.997 - gasCostUsdc;
     console.log("USDT después de vender (con comisión y gas):", usdtAfterSell);
 
     // Obtener la fecha actual en formato SQL

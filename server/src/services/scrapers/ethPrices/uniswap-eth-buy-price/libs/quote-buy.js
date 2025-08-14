@@ -10,7 +10,7 @@ import {
 import { getProvider } from './providers.js';
 import { toReadableAmount, fromReadableAmount } from './conversion.js';
 
-export async function quoteToBuy(customAmountIn = null) {
+export async function quoteToBuyWeth(customAmountIn = null) {
   const provider = getProvider();
   
   // Verifica la dirección del contrato Quoter
@@ -28,42 +28,42 @@ export async function quoteToBuy(customAmountIn = null) {
 
   const poolConstants = await getPoolConstants();
 
-  // Si no se pasa un valor de USDC, calculamos cuánto USDC necesitamos para obtener 1 WBTC
+  // Si no se pasa un valor de USDC, calculamos cuánto USDC necesitamos para obtener 1 WETH
   if (customAmountIn === null) {
-    const amountIn = fromReadableAmount(1, CurrentConfig.tokens.out.decimals).toString(); // 1 WBTC
+    const amountOut = fromReadableAmount(1, CurrentConfig.tokens.out.decimals).toString(); // 1 WETH en wei
 
     try {
-      // Calculamos cuántos USDC necesitamos para obtener 1 WBTC
-      const quotedAmountOut = await quoterContract.callStatic.quoteExactOutputSingle(
-        poolConstants.token1, // WBTC (token de salida)
+      // Calculamos cuántos USDC necesitamos para obtener 1 WETH
+      const quotedAmountIn = await quoterContract.callStatic.quoteExactOutputSingle(
         poolConstants.token0, // USDC (token de entrada)
+        poolConstants.token1, // WETH (token de salida)
         poolConstants.fee,
-        amountIn, // 1 WBTC
-        0 // No necesitas un límite mínimo de la cantidad
+        amountOut, // 1 WETH en wei
+        0
       );
-      console.log(`\x1b[33mCantidad de USDC necesaria para comprar 1 WBTC:`,"\x1b[32m", toReadableAmount(quotedAmountOut, CurrentConfig.tokens.in.decimals),"\x1b[0m");
-      return toReadableAmount(quotedAmountOut, CurrentConfig.tokens.in.decimals);
+      console.log(`\x1b[33mCantidad de USDC necesaria para comprar 1 WETH:`,"\x1b[32m", toReadableAmount(quotedAmountIn, CurrentConfig.tokens.in.decimals),"\x1b[0m");
+      return toReadableAmount(quotedAmountIn, CurrentConfig.tokens.in.decimals);
     } catch (error) {
       console.error('Error in quoteExactOutputSingle for USDC amount:', error);
       throw error; // Lanza el error para que sea manejado más adelante
     }
   } else {
-    // Si se pasa un valor de USDC, calculamos cuántos WBTC podemos obtener con ese valor
+    // Si se pasa un valor de USDC, calculamos cuántos WETH podemos obtener con ese valor
     const amountIn = fromReadableAmount(customAmountIn, CurrentConfig.tokens.in.decimals).toString();
 
     try {
-      // Calculamos cuántos WBTC se pueden obtener con los USDC proporcionados
+      // Calculamos cuántos WETH se pueden obtener con los USDC proporcionados
       const quotedAmountOut = await quoterContract.callStatic.quoteExactOutputSingle(
         poolConstants.token0, // USDC (token de entrada)
-        poolConstants.token1, // WBTC (token de salida)
+        poolConstants.token1, // WETH (token de salida)
         poolConstants.fee,
         amountIn, // USDC proporcionados
         0 // No necesitas un límite mínimo de la cantidad
       );
-      console.log(`Cantidad de WBTC que puedes comprar con ${customAmountIn} USDC:`, toReadableAmount(quotedAmountOut, CurrentConfig.tokens.out.decimals));
+      console.log(`Cantidad de WETH que puedes comprar con ${customAmountIn} USDC:`, toReadableAmount(quotedAmountOut, CurrentConfig.tokens.out.decimals));
       return toReadableAmount(quotedAmountOut, CurrentConfig.tokens.out.decimals);
     } catch (error) {
-      console.error('Error in quoteExactInputSingle for WBTC amount:', error);
+      console.error('Error in quoteExactInputSingle for WETH amount:', error);
       throw error; // Lanza el error para que sea manejado más adelante
     }
   }
@@ -99,4 +99,5 @@ export async function quoteToBuy(customAmountIn = null) {
     fee,
   };
 }
+
 

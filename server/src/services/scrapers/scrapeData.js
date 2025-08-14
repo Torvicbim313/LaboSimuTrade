@@ -27,9 +27,12 @@ const scrapeData = () => {
           const $ = cheerio.load(html);
   
           const desiredNode = $("table.table-condensed tbody tr:nth-child(10) td:nth-child(4)");
+
+          const desiredNode2 = $("table.table-condensed tbody tr:nth-child(9) td:nth-child(4)");
+
           // Verificar si se encontró el nodo deseado y obtener los valores
-          if (desiredNode.length > 0) {
-            const dataBtc = desiredNode.attr('data-val');
+          if (desiredNode.length > 0 && desiredNode2.length > 0) {
+            const dataBtc = parseFloat(desiredNode.attr('data-val')) + parseFloat(desiredNode2.attr('data-val'));
 
             axiosInstance.get('https://httpbin.org/ip')
             .then((response) => {
@@ -106,6 +109,8 @@ const scrapeData = () => {
   
     
   }
+
+
   
   export default scrapeData;
   
