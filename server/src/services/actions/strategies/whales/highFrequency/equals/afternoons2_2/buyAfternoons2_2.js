@@ -1,4 +1,5 @@
 import pool from "../../../../../../../database/dbConnection.js";
+import { quoteToSellWeth } from "../../../../../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
 import { quoteToBuy } from "../../../../../../scrapers/uniswap-v3-buy-price/libs/quote-buy.js";
 import { quoteToSell } from "../../../../../../scrapers/uniswap-v3-sell-price/libs/quote-sell.js";
 import stopLossAfternoons2_2 from "./stopLossAfternoons2_2.js";
@@ -37,9 +38,22 @@ const buyAfternoons2_2 = async () => {
         const usdtRounded = parseFloat(usdtToNumber.toFixed(6));
         console.log("QUE VALOR???", usdtToNumber)
 
-        const gasCostBtc = 0; // Ejemplo: costo de gas en BTC (ajusta según tu estimación)
+        // --- Cálculo del gas ---
+        // 1. Calcula el coste del gas en ETH
+        const gasLimit = 150000;
+        const gasPrice = await provider.getGasPrice();
+        const gasCostEth = Number(formatUnits((BigInt(gasPrice.toString()) * BigInt(gasLimit)).toString(), "ether"));
 
-        const btcItCanPurchase = parseFloat(await quoteToBuy(usdtRounded)) * 0.997 - gasCostBtc;
+        // 2. Convierte el gas a USDC
+        const ethPriceUsdc = parseFloat(await quoteToSellWeth()); // Debes tener esta función
+        const gasCostUsdc = gasCostEth * ethPriceUsdc;
+
+        // 3. Convierte el gas en USDC a WBTC
+        const wbtcBuyPriceUsdc = parseFloat(await quoteToBuy()); // Precio de compra de WBTC en USDC
+        const gasCostWbtc = gasCostUsdc / wbtcBuyPriceUsdc;
+
+        // 4. Aplica el descuento en el cálculo final
+        const btcItCanPurchase = parseFloat(await quoteToBuy(usdtRounded)) * 0.997 - gasCostWbtc;
         console.log("CUANTOS BTC PODRIA COMPRAR (con comisión y gas)", btcItCanPurchase)
 
         const previousWbtcToNumber = parseFloat(btc);
