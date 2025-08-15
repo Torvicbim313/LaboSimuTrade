@@ -56,6 +56,7 @@
 
 import dailyWhalesDataWriter from "../services/schedulers/dailyWhalesDataWriter.js";
 import dailyWhalesDataWriterAfternoons from "../services/schedulers/dailyWhalesDataWriterAfternoons.js";
+import dailyEthDataWritter from "../services/schedulers/wEth/dailyEthDataWritter.js";
 
 const dayInMilliseconds = 24 * 60 * 60 * 1000;
 
@@ -77,6 +78,11 @@ export const startdailyWhalesDataWriter = () => {
   setTimeout(() => {
     dailyWhalesDataWriter();
     setInterval(dailyWhalesDataWriter, dayInMilliseconds); // Se ejecutará cada 24 horas después
+  }, timeUntilMorning);
+
+    setTimeout(() => {
+    dailyEthDataWritter();
+    setInterval(dailyEthDataWritter, dayInMilliseconds); // Se ejecutará cada 24 horas después
   }, timeUntilMorning);
 };
 
