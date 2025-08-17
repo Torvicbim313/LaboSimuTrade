@@ -1,15 +1,31 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 
+
+const proxyOptions = {
+  proxy: {
+    host: 'p.webshare.io',
+    port: 80,
+    auth: {
+      username: 'jacrzecm-rotate',
+      password: 'bpgru0ovjy9c'
+    },
+    protocol: 'http'
+  }
+};
+
 const scrapedEthData = async () => {
   let pagina = 1;
   let direcciones = [];
   let sinTagCount = 0; // Contador de direcciones sin tag encontradas
 
+  const axiosInstance = axios.create(proxyOptions);
+
+
   while (direcciones.length < 660) {
     const url = `https://etherscan.io/accounts/${pagina}`;
     console.log(`📄 Leyendo página ${pagina}...`);
-    const { data } = await axios.get(url);
+    const { data } = await axiosInstance.get(url);
     const $ = cheerio.load(data);
 
     $("table tbody tr").each((_, row) => {
@@ -39,12 +55,12 @@ const scrapedEthData = async () => {
 
   const totalETH = direcciones.reduce((sum, w) => sum + w.balanceETH, 0);
 
-//   console.log(`✅ Total de direcciones sin tag (del puesto 11 al 660): ${direcciones.length}`);
-//   console.log(`💰 Total ETH acumulado: ${totalETH.toLocaleString("en-US", { maximumFractionDigits: 2 })}`);
+  // console.log(`✅ Total de direcciones sin tag (del puesto 11 al 660): ${direcciones.length}`);
+  // console.log(`💰 Total ETH acumulado: ${totalETH.toLocaleString("en-US", { maximumFractionDigits: 2 })}`);
   // console.log(typeof totalETH, totalETH);
   return totalETH;
 }
 
-
+// scrapedEthData()
 export default scrapedEthData;
 
