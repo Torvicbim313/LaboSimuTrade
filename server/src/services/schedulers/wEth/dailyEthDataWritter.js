@@ -23,11 +23,11 @@ const dailyEthDataWritter = async () => {
 
     // Obtén el último valor de BTC de la base de datos
     const [lastRecord] = await db.query(
-      "SELECT BTC FROM trading_eth_data ORDER BY ID DESC LIMIT 1"
+      "SELECT ETH_AMOUNT FROM trading_eth_data ORDER BY ID DESC LIMIT 1"
     );
 
-    const lastBtcValue = lastRecord?.[0]?.ETH_AMOUNT || 0; // Si no hay registros previos, usa 0
-    const diferencia = numericdataEth - lastBtcValue;
+    const lastWethValue = lastRecord?.[0]?.ETH_AMOUNT || 0; // Si no hay registros previos, usa 0
+    const diferencia = numericdataEth - lastWethValue;
 
     // Inserta el nuevo registro en la base de datos
     const query = `
