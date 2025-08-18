@@ -73,7 +73,7 @@ export function calculateTimeUntilTarget(targetHour, targetMinute) {
 
 // Lanzar dailyWhalesDataWriter a las 8:13 AM
 export const startdailyWhalesDataWriter = () => {
-  const timeUntilMorning = calculateTimeUntilTarget(8, 44);
+  const timeUntilMorning = calculateTimeUntilTarget(8, 13);
 
   setTimeout(() => {
     dailyWhalesDataWriter();

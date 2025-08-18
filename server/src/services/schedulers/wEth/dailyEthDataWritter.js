@@ -1,10 +1,10 @@
 import pool from "../../../database/dbConnection.js";
-import updateLastRecord from "../updateLastRecord.js";
-import highSellSignal from "../../events/highSellSignal.js";
 import { eventEmitter } from "../../../utils/eventEmitter.js";
 import scrapedEthData from "../../scrapers/etherScan/etherScan.js";
 import { quoteToBuyWeth } from "../../scrapers/ethPrices/uniswap-eth-buy-price/libs/quote-buy.js";
 import { quoteToSellWeth } from "../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
+import highSellSignalWeth from "../../events/wEth/highSellSignalWeth.js";
+import updateLastRecordWeth from "./updateLastRecordWeth.js";
 
 const dailyEthDataWritter = async () => {
 
@@ -44,11 +44,11 @@ const dailyEthDataWritter = async () => {
       sellPriceWethUniSdk,
     ]);
 
-    // await updateLastRecord();
+    await updateLastRecordWeth();
 
-    // const highTradeSignal = await highSellSignal();
+    const highTradeSignal = await highSellSignalWeth();
 
-    // highTradeSignal ? eventEmitter.emit('highTradeSignalMornings', parseFloat(sellPriceWethUniSdk)) : eventEmitter.emit('noSellHighSignal');
+    highTradeSignal ? eventEmitter.emit('highTradeSignalWeth', parseFloat(sellPriceWethUniSdk)) : eventEmitter.emit('noSellHighSignalWeth');
 
 
     console.log("Registro insertado:", result);
