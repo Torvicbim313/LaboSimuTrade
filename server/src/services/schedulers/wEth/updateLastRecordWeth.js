@@ -1,6 +1,5 @@
 import whalesDataAndPricesWeth from "../../../models/collections/wEth/whalesDataAndPricesWeth.js";
 import highSellSignalWeth from "../../events/wEth/highSellSignalWeth.js";
-import whalesDataAndPrices from "../../models/collections/whalesDataAndPrices.js";
 
 const updateLastRecordWeth = async () => {
   try {
