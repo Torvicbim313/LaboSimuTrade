@@ -1,9 +1,17 @@
 import pool from "../../../../../../../database/dbConnection.js";
 import { quoteToSellWeth } from "../../../../../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
+import { getProvider } from "../../../../../../scrapers/uniswap-v3-buy-price/libs/providers.js";
 import { quoteToBuy } from "../../../../../../scrapers/uniswap-v3-buy-price/libs/quote-buy.js";
 import { quoteToSell } from "../../../../../../scrapers/uniswap-v3-sell-price/libs/quote-sell.js";
 import stopLossAfternoons2_2 from "./stopLossAfternoons2_2.js";
 import takeProfitAfternoons2_2 from "./takeProfitAfternoons2_2.js";
+import pkg from "ethers";
+
+
+const { utils } = pkg;
+const { formatUnits } = utils;
+
+const provider = getProvider();
 
 const buyAfternoons2_2 = async () => {
 

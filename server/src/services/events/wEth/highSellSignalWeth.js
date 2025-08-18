@@ -1,7 +1,7 @@
 import pool from "../../../database/dbConnection.js";
 
 
-const highSellSignal = async (currentSlice = null) => {
+const highSellSignalWeth = async (currentSlice = null) => {
   let db;
   try {
     let data;
@@ -160,8 +160,8 @@ const backtest = async () => {
       // Toma una ventana de 7 registros hacia atrás desde el índice actual
       const currentSlice = rows.slice(Math.max(0, i - 6), i + 1);
 
-      // Llama a la función highSellSignal con los datos de la ventana actual
-      const shouldSell = await highSellSignal(currentSlice);
+      // Llama a la función highSellSignalWeth con los datos de la ventana actual
+      const shouldSell = await highSellSignalWeth(currentSlice);
       //  console.log("Evaluando currentSlice:", currentSlice);
       //  console.log("Resultado de shouldSell:", shouldSell);
 
@@ -194,4 +194,4 @@ const backtest = async () => {
 
 
 
-export default highSellSignal;
+export default highSellSignalWeth;
