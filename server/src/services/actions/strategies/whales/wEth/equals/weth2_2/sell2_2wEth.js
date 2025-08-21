@@ -1,7 +1,7 @@
 import pkg from "ethers";
-import { getProvider } from "../../../../../scrapers/ethPrices/uniswap-eth-buy-price/libs/providers.js";
-import pool from "../../../../../../database/dbConnection.js";
-import { quoteToSellWeth } from "../../../../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
+import { getProvider } from "../../../../../../scrapers/ethPrices/uniswap-eth-buy-price/libs/providers.js";
+import pool from "../../../../../../../database/dbConnection.js";
+import { quoteToSellWeth } from "../../../../../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
 
 const { utils } = pkg;
 const { formatUnits } = utils;
