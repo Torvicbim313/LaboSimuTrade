@@ -1,6 +1,6 @@
-import pool from "../../../../../../database/dbConnection.js";
+import pool from "../../../../../../../database/dbConnection.js";
 
-const takeProfit2_2wEth = async (amountToBuy, buyPrice, sellPrice) => {
+const stopLoss2_2wEth = async (amountToBuy, buyPrice, sellPrice) => {
 
   const db = await pool.getConnection();
   
@@ -28,14 +28,14 @@ const takeProfit2_2wEth = async (amountToBuy, buyPrice, sellPrice) => {
           sellPrice
         ]);
 
-        console.log("Compra en beneficios registrada correctamente en 2_2weth:", result);
+        console.log("Compra en perdidas registrada correctamente en 2_2weth:", result);
         return amountToBuy;
 
     } catch (error) {
-        console.error("Error intentando comprar en ganancias en takeProfit2_2wEth: ",error)
+        console.error("Error intentando comprar en perdidas en stopLoss2_2wEth: ",error)
     } finally {
       db.release();  // IMPORTANTE: liberar la conexión después de usarla
   }
 }
 
-export default takeProfit2_2wEth;
+export default stopLoss2_2wEth;

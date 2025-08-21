@@ -1,7 +1,7 @@
-import pool from "../../../../../../database/dbConnection.js";
-import { getProvider } from "../../../../../scrapers/ethPrices/uniswap-eth-buy-price/libs/providers.js";
-import { quoteToBuyWeth } from "../../../../../scrapers/ethPrices/uniswap-eth-buy-price/libs/quote-buy.js";
-import { quoteToSellWeth } from "../../../../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
+import pool from "../../../../../../../database/dbConnection.js";
+import { getProvider } from "../../../../../../scrapers/ethPrices/uniswap-eth-buy-price/libs/providers.js";
+import { quoteToBuyWeth } from "../../../../../../scrapers/ethPrices/uniswap-eth-buy-price/libs/quote-buy.js";
+import { quoteToSellWeth } from "../../../../../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
 import stopLoss2_2wEth from "./stopLoss2_2wEth.js";
 import takeProfit2_2wEth from "./takeProfit2_2wEth.js";
 import pkg from "ethers";

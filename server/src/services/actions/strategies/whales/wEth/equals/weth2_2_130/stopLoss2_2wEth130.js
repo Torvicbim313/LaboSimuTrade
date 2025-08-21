@@ -1,20 +1,20 @@
-import pool from "../../../../../../database/dbConnection.js";
+import pool from "../../../../../../../database/dbConnection.js";
 
-const stopLoss2_2wEth = async (amountToBuy, buyPrice, sellPrice) => {
+const stopLoss2_2weth130 = async (amountToBuy, buyPrice, sellPrice) => {
 
   const db = await pool.getConnection();
   
     try {
 
         const [whalesAmountResult] = await db.query(
-            "SELECT ETH_AMOUNT FROM trading_eth_data ORDER BY id DESC LIMIT 1"
+            "SELECT ETH_AMOUNT FROM trading_eth_data_130 ORDER BY id DESC LIMIT 1"
           );
           const whalesAmount = whalesAmountResult.length ? parseFloat(whalesAmountResult[0].ETH_AMOUNT) : 0;
 
           const formattedDate = new Date().toISOString().slice(0, 19).replace("T", " ");
 
           const query = `
-          INSERT INTO 2_2weth (fecha, eth_amount, usdc, accion, ballenas, precio_compra, precio_venta)
+          INSERT INTO 2_2weth130 (fecha, eth_amount, usdc, accion, ballenas, precio_compra, precio_venta)
           VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
     
@@ -28,14 +28,14 @@ const stopLoss2_2wEth = async (amountToBuy, buyPrice, sellPrice) => {
           sellPrice
         ]);
 
-        console.log("Compra en perdidas registrada correctamente en 2_2weth:", result);
+        console.log("Compra en perdidas registrada correctamente en 2_2weth130:", result);
         return amountToBuy;
 
     } catch (error) {
-        console.error("Error intentando comprar en perdidas en stopLoss2_2wEth: ",error)
+        console.error("Error intentando comprar en perdidas en stopLoss2_2weth130: ",error)
     } finally {
       db.release();  // IMPORTANTE: liberar la conexión después de usarla
   }
 }
 
-export default stopLoss2_2wEth;
+export default stopLoss2_2weth130;
