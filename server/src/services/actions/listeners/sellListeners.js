@@ -17,14 +17,25 @@ const sellListeners = async () => {
         }
     })
 
-        eventEmitter.on('highTradeSignalWeth', async (sellPrice) => {
+    eventEmitter.on('highTradeSignalWeth', async (sellPrice) => {
         console.log(`Se emitió un highTradeSignalWeth con sellPrice: ${sellPrice}`);
 
         const isOperation2_2Weth = await isOperationInTable("2_2weth");
 
         if (isOperation2_2Weth === 'BUY') {
-            console.log('LUZ VERDE PARA VENDER!!! a: ', sellPrice)
+            console.log('LUZ VERDE PARA VENDER 2_2weth!!! a: ', sellPrice)
             await sell2_2wEth();
+        }
+    })
+
+        eventEmitter.on('highTradeSignalWeth130', async (sellPrice) => {
+        console.log(`Se emitió un highTradeSignalWeth130 con sellPrice: ${sellPrice}`);
+
+        const isOperation2_2Weth = await isOperationInTable("2_2weth130");
+
+        if (isOperation2_2Weth === 'BUY') {
+            console.log('LUZ VERDE PARA VENDER 2_2weth130!!! a: ', sellPrice);
+        //    await sell2_2wEth();
         }
     })
 
