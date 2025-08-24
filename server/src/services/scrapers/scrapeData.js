@@ -16,7 +16,10 @@ const proxyOptions = {
 const scrapeData = () => {
     return new Promise((resolve, reject) => {
 
-      const axiosInstance = axios.create(proxyOptions);
+      // const axiosInstance = axios.create(proxyOptions);
+
+      const axiosInstance = axios;
+
 
       
 
