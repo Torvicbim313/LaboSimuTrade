@@ -74,12 +74,12 @@ export function calculateTimeUntilTarget(targetHour, targetMinute) {
 
 // Lanzar dailyWhalesDataWriter a las 8:13 AM
 export const startdailyWhalesDataWriter = () => {
-  const timeUntilMorning = calculateTimeUntilTarget(8, 13);
+  const timeUntilMorning = calculateTimeUntilTarget(9, 45);
 
-  setTimeout(() => {
-    dailyWhalesDataWriter();
-    setInterval(dailyWhalesDataWriter, dayInMilliseconds); // Se ejecutará cada 24 horas después
-  }, timeUntilMorning);
+  // setTimeout(() => {
+  //   dailyWhalesDataWriter();
+  //   setInterval(dailyWhalesDataWriter, dayInMilliseconds); // Se ejecutará cada 24 horas después
+  // }, timeUntilMorning);
 
     setTimeout(() => {
     dailyEthDataWritter();
