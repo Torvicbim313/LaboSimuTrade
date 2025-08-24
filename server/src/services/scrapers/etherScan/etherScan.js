@@ -19,7 +19,9 @@ const scrapedEthData = async () => {
   let direcciones = [];
   let sinTagCount = 0; // Contador de direcciones sin tag encontradas
 
-  const axiosInstance = axios.create(proxyOptions);
+  // const axiosInstance = axios.create(proxyOptions);
+  const axiosInstance = axios;
+
 
 
   while (direcciones.length < 660) {
