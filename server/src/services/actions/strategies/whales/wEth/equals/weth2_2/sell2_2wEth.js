@@ -1,7 +1,7 @@
 import pkg from "ethers";
 import { getProvider } from "../../../../../../scrapers/ethPrices/uniswap-eth-buy-price/libs/providers.js";
-import pool from "../../../../../../../database/dbConnection.js";
 import { quoteToSellWeth } from "../../../../../../scrapers/ethPrices/uniswap-eth-sell-price/libs/quote-sell.js";
+import pool from "../../../../../../../database/dbConnection.js";
 
 const { utils } = pkg;
 const { formatUnits } = utils;
@@ -18,13 +18,13 @@ const sell2_2wEth = async () => {
     const [ethAmountResult] = await db.query(
       "SELECT eth_amount FROM 2_2weth ORDER BY id DESC LIMIT 1"
     );
-    const ethAmount = ethAmountResult.length ? parseFloat(ethAmountResult[0].eth) : 0;
+    const ethAmount = ethAmountResult.length ? parseFloat(ethAmountResult[0].eth_amount) : 0;
 
     // Obtener el último precio de venta desde 'trading_data_afternoons'
     const [ethSellPriceResult] = await db.query(
       "SELECT ETHUSDC FROM trading_eth_data ORDER BY id DESC LIMIT 1"
     );
-    const ethSellPrice = ethSellPriceResult.length ? parseFloat(ethSellPriceResult[0].PRECIO_VENTA) : 0;
+    const ethSellPrice = ethSellPriceResult.length ? parseFloat(ethSellPriceResult[0].ETHUSDC) : 0;
 
     // --- Cálculo del gas ---
     const gasLimit = 150000; // Un swap típico en Uniswap
@@ -47,19 +47,21 @@ const sell2_2wEth = async () => {
     const [whalesAmountResult] = await db.query(
       "SELECT ETH_AMOUNT FROM trading_eth_data ORDER BY id DESC LIMIT 1"
     );
-    const whalesAmount = whalesAmountResult.length ? parseFloat(whalesAmountResult[0].eth) : 0;
+    const whalesAmount = whalesAmountResult.length ? parseFloat(whalesAmountResult[0].ETH_AMOUNT) : 0;
 
     // Obtener el último precio de compra desde 'trading_data_afternoons'
     const [ethBuyPriceResult] = await db.query(
       "SELECT USDCETH FROM trading_eth_data ORDER BY id DESC LIMIT 1"
     );
-    const ethBuyPrice = ethBuyPriceResult.length ? parseFloat(ethBuyPriceResult[0].PRECIO_COMPRA) : 0;
+    const ethBuyPrice = ethBuyPriceResult.length ? parseFloat(ethBuyPriceResult[0].USDCETH) : 0;
 
     // Insertar el nuevo registro con los datos de la venta
     const query = `
       INSERT INTO 2_2weth (fecha, eth_amount, usdc, accion, ballenas, precio_compra, precio_venta)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
+
+
 
     const [result] = await db.query(query, [
       formattedDate,
@@ -82,3 +84,5 @@ const sell2_2wEth = async () => {
 };
 
 export default sell2_2wEth;
+
+// await sell2_2wEth();

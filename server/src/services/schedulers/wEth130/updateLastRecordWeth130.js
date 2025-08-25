@@ -1,5 +1,6 @@
 import whalesDataAndPricesWeth130 from "../../../models/collections/wEth_130/whalesDataAndPricesWeth130.js";
 import highSellSignalWeth from "../../events/wEth/highSellSignalWeth.js";
+import highSellSignalWeth130 from "../../events/wEth130/highSellSignalWeth130.js";
 
 const updateLastRecordWeth = async () => {
   try {
@@ -11,7 +12,7 @@ const updateLastRecordWeth = async () => {
     }
 
     // Evalúa la señal de venta
-    const signal = await highSellSignalWeth();
+    const signal = await highSellSignalWeth130();
 
 
     if (signal) {
