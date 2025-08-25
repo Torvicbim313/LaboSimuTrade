@@ -59,5 +59,7 @@ const dailyEthDataWritter = async () => {
     db.release();  // IMPORTANTE: liberar la conexión después de usarla
 }
 };
-
+// await dailyEthDataWritter();
 export default dailyEthDataWritter;
+
+

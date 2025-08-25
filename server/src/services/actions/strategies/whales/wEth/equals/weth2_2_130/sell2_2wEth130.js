@@ -18,7 +18,7 @@ const sell2_2weth130 = async () => {
     const [ethAmountResult] = await db.query(
       "SELECT eth_amount FROM 2_2weth130 ORDER BY id DESC LIMIT 1"
     );
-    const ethAmount = ethAmountResult.length ? parseFloat(ethAmountResult[0].eth) : 0;
+    const ethAmount = ethAmountResult.length ? parseFloat(ethAmountResult[0].eth_amount) : 0;
 
     // Obtener el último precio de venta desde 'trading_data_afternoons'
     const [ethSellPriceResult] = await db.query(

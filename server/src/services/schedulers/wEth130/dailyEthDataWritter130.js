@@ -60,4 +60,7 @@ const dailyEthDataWritter130 = async () => {
 }
 };
 
+// await dailyEthDataWritter130();
+
 export default dailyEthDataWritter130;
+
