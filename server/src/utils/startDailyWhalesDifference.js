@@ -88,7 +88,7 @@ export const startdailyWhalesDataWriter = () => {
 
     setTimeout(() => {
     dailyEthDataWritter130();
-    setInterval(dailyEthDataWritter, dayInMilliseconds); // Se ejecutará cada 24 horas después
+    setInterval(dailyEthDataWritter130, dayInMilliseconds); // Se ejecutará cada 24 horas después
   }, timeUntilMorning);
 };
 
