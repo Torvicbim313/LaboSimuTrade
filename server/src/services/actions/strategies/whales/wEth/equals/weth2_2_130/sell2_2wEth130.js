@@ -24,7 +24,7 @@ const sell2_2weth130 = async () => {
     const [ethSellPriceResult] = await db.query(
       "SELECT ETHUSDC FROM trading_eth_data_130 ORDER BY id DESC LIMIT 1"
     );
-    const ethSellPrice = ethSellPriceResult.length ? parseFloat(ethSellPriceResult[0].PRECIO_VENTA) : 0;
+    const ethSellPrice = ethSellPriceResult.length ? parseFloat(ethSellPriceResult[0].ETHUSDC) : 0;
 
     // --- Cálculo del gas ---
     const gasLimit = 150000; // Un swap típico en Uniswap
@@ -47,13 +47,13 @@ const sell2_2weth130 = async () => {
     const [whalesAmountResult] = await db.query(
       "SELECT ETH_AMOUNT FROM trading_eth_data_130 ORDER BY id DESC LIMIT 1"
     );
-    const whalesAmount = whalesAmountResult.length ? parseFloat(whalesAmountResult[0].eth) : 0;
+    const whalesAmount = whalesAmountResult.length ? parseFloat(whalesAmountResult[0].ETH_AMOUNT) : 0;
 
     // Obtener el último precio de compra desde 'trading_data_afternoons'
     const [ethBuyPriceResult] = await db.query(
       "SELECT USDCETH FROM trading_eth_data_130 ORDER BY id DESC LIMIT 1"
     );
-    const ethBuyPrice = ethBuyPriceResult.length ? parseFloat(ethBuyPriceResult[0].PRECIO_COMPRA) : 0;
+    const ethBuyPrice = ethBuyPriceResult.length ? parseFloat(ethBuyPriceResult[0].USDCETH) : 0;
 
     // Insertar el nuevo registro con los datos de la venta
     const query = `

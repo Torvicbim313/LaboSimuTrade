@@ -42,9 +42,10 @@ const buy2_2wEth = async () => {
         const sellPriceethUni = await quoteToSellWeth()
         console.log("PRECIO VENTA Weth",sellPriceethUni)
 
-        const usdcToNumber = parseFloat(usdc); // Convertimos a número primero
+        const usdcToNumber = parseFloat(usdc);
+        console.log('EEEEE', usdcToNumber) // Convertimos a número primero
         const usdcRounded = parseFloat(usdcToNumber.toFixed(6));
-        console.log("QUE VALOR???", usdcToNumber)
+        console.log("QUE VALOR???", typeof usdcToNumber)
 
         // --- Cálculo del gas ---
         // 1. Gas en ETH
@@ -72,7 +73,7 @@ const buy2_2wEth = async () => {
         console.log("CUANTOS eth PODRIA COMPRAR (con comisión y gas)", ethItCanPurchase)
 
         const previousWethToNumber = parseFloat(eth_amount);
-        const previousWethAmount = parseFloat(previousWethToNumber.toFixed(6));
+        const previousWethAmount = parseFloat(previousWethToNumber.toFixed(10));
         console.log("Weth PREVIOS: ", previousWethAmount)
 
         const green = "\x1b[32m";
@@ -114,5 +115,6 @@ const buy2_2wEth = async () => {
         db.release();  // IMPORTANTE: liberar la conexión después de usarla
     }
 };
+
 
 export default buy2_2wEth;
