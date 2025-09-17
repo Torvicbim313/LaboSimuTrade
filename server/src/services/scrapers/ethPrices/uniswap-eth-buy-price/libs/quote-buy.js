@@ -50,15 +50,16 @@ export async function quoteToBuyWeth(customAmountIn = null) {
   } else {
     // Si se pasa un valor de USDC, calculamos cuántos WETH podemos obtener con ese valor
     const amountIn = fromReadableAmount(customAmountIn, CurrentConfig.tokens.in.decimals).toString();
+    console.log("customAmountIn:", customAmountIn, "amountIn:", amountIn);
 
     try {
       // Calculamos cuántos WETH se pueden obtener con los USDC proporcionados
-      const quotedAmountOut = await quoterContract.callStatic.quoteExactOutputSingle(
+      const quotedAmountOut = await quoterContract.callStatic.quoteExactInputSingle(
         poolConstants.token0, // USDC (token de entrada)
         poolConstants.token1, // WETH (token de salida)
         poolConstants.fee,
-        amountIn, // USDC proporcionados
-        0 // No necesitas un límite mínimo de la cantidad
+        amountIn, // USDC proporcionados (en unidades mínimas)
+        0
       );
       console.log(`Cantidad de WETH que puedes comprar con ${customAmountIn} USDC:`, toReadableAmount(quotedAmountOut, CurrentConfig.tokens.out.decimals));
       return toReadableAmount(quotedAmountOut, CurrentConfig.tokens.out.decimals);

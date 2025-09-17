@@ -52,6 +52,7 @@ sellListeners();
 buyListeners();
 
 // eventEmitter.emit('highTradeSignal',103000)
+// eventEmitter.emit('highTradeSignalWeth130', 5000)
 
 
 
