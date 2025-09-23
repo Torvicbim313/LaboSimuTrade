@@ -84,14 +84,14 @@ const buy3_3weth130 = async () => {
 
         console.log(`EL PORCENTAJE ACUTAL ES DE: ${color}${currentRatio} %${reset}`)
 
-        if (previousWethAmount * 1.02 < ethItCanPurchase && ethItCanPurchase < previousWethAmount * 3) {
+        if (previousWethAmount * 1.03 < ethItCanPurchase && ethItCanPurchase < previousWethAmount * 3) {
 
             // console.log('take profit')
             await takeProfit3_3weth130(ethItCanPurchase, buyPriceethUni, sellPriceethUni);
 
         }
 
-        if (previousWethAmount > ethItCanPurchase * 1.02) {
+        if (previousWethAmount > ethItCanPurchase * 1.03) {
 
             console.log('stop loss')
             await stopLoss3_3weth130(ethItCanPurchase, buyPriceethUni, sellPriceethUni);
