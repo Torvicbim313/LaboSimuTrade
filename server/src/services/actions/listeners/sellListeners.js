@@ -4,6 +4,10 @@ import sell2_2wEth from "../strategies/whales/wEth/equals/weth2_2/sell2_2wEth.js
 import sell2_2weth130 from "../strategies/whales/wEth/equals/weth2_2_130/sell2_2wEth130.js";
 import sell3_3wEth from "../strategies/whales/wEth/equals/weth3_3/sell3_3wEth.js";
 import sell3_3weth130 from "../strategies/whales/wEth/equals/weth3_3_130/sell3_3wEth130.js";
+import sell6_2wEth from "../strategies/whales/wEth/multiplys/weth6_2/sell6_2wEth.js";
+import sell6_3wEth from "../strategies/whales/wEth/multiplys/weth6_3/sell6_3wEth.js";
+import sell9_2wEth from "../strategies/whales/wEth/multiplys/weth9_2/sell9_2wEth.js";
+import sell9_3wEth from "../strategies/whales/wEth/multiplys/weth9_3/sell9_3wEth.js";
 import isOperationInTable from "../utils/isOperationInTable.js";
 
 
@@ -35,6 +39,34 @@ const sellListeners = async () => {
         if (isOperation3_3Weth === 'BUY') {
             console.log('LUZ VERDE PARA VENDER 3_3weth!!! a: ', sellPrice)
             await sell3_3wEth();
+        }
+
+        const isOperation6_2Weth = await isOperationInTable("6_2weth");
+
+        if (isOperation6_2Weth === 'BUY') {
+            console.log('LUZ VERDE PARA VENDER 6_2weth!!! a: ', sellPrice)
+            await sell6_2wEth();
+        }
+
+        const isOperation6_3Weth = await isOperationInTable("6_3weth");
+
+        if (isOperation6_3Weth === 'BUY') {
+            console.log('LUZ VERDE PARA VENDER 6_3weth!!! a: ', sellPrice)
+            await sell6_3wEth();
+        }
+
+        const isOperation9_2Weth = await isOperationInTable("9_2weth");
+
+        if (isOperation9_2Weth === 'BUY') {
+            console.log('LUZ VERDE PARA VENDER 9_2weth!!! a: ', sellPrice)
+            await sell9_2wEth();
+        }
+
+        const isOperation9_3Weth = await isOperationInTable("9_3weth");
+
+        if (isOperation9_3Weth === 'BUY') {
+            console.log('LUZ VERDE PARA VENDER 9_3weth!!! a: ', sellPrice)
+            await sell9_3wEth();
         }
     })
 

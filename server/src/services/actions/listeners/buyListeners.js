@@ -3,6 +3,10 @@ import buy2_2wEth from "../strategies/whales/wEth/equals/weth2_2/buy2_2wEth.js";
 import buy2_2weth130 from "../strategies/whales/wEth/equals/weth2_2_130/buy2_2wEth130.js";
 import buy3_3wEth from "../strategies/whales/wEth/equals/weth3_3/buy3_3wEth.js";
 import buy3_3weth130 from "../strategies/whales/wEth/equals/weth3_3_130/buy3_3wEth130.js";
+import buy6_2wEth from "../strategies/whales/wEth/multiplys/weth6_2/buy6_2wEth.js";
+import buy6_3wEth from "../strategies/whales/wEth/multiplys/weth6_3/buy6_3wEth.js";
+import buy9_2wEth from "../strategies/whales/wEth/multiplys/weth9_2/buy9_2wEth.js";
+import buy9_3wEth from "../strategies/whales/wEth/multiplys/weth9_3/buy9_3wEth.js";
 import isOperationInTable from "../utils/isOperationInTable.js";
 
 const buyListeners = async () => {
@@ -36,6 +40,28 @@ const buyListeners = async () => {
 
     if (isOperation3_3wEth130 === 'SELL') await buy3_3weth130();
 
+
+
+    const isOperation6_2wEth130 = await isOperationInTable("6_2weth");
+
+    if (isOperation6_2wEth130 === 'SELL') await buy6_2wEth();
+
+
+
+    const isOperation6_3wEth = await isOperationInTable("6_3weth");
+
+    if (isOperation6_3wEth === 'SELL') await buy6_3wEth();
+
+
+
+    const isOperation9_2wEth = await isOperationInTable("9_2weth");
+
+    if (isOperation9_2wEth === 'SELL') await buy9_2wEth();
+
+
+    const isOperation9_3wEth = await isOperationInTable("9_3weth");
+
+    if (isOperation9_3wEth === 'SELL') await buy9_3wEth(); 
 
 
 }

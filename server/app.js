@@ -61,24 +61,24 @@ app.get('/ping', (req, res) => {
 });
 
 
-const pingInterval = 5 * 60 * 1000; // Intervalo de ping en milisegundos (5 minutos)
+// const pingInterval = 5 * 60 * 1000; // Intervalo de ping en milisegundos (5 minutos)
 
-// Realizar un ping interno cada cierto intervalo
-setInterval(async () => {
-  try {
-    // Realiza una solicitud de ping interno a tu propia aplicación
-    const response = await axios.get('https://labosimutrade-1.onrender.com/ping'); // Ajusta la URL según tu configuración
-    if (response.status === 200 && response.data === 'Ping OK') {
-      console.log('Ping interno exitoso. La aplicación está activa.');
-    } else {
-      console.error('Error en el ping interno. La aplicación puede estar inactiva.');
-      // Toma medidas para reiniciar la aplicación o notificar si algo sale mal
-    }
-  } catch (error) {
-    console.error('Error en el ping interno:', error.message);
-    // Maneja cualquier error que pueda ocurrir durante el ping
-  }
-}, pingInterval);
+// // Realizar un ping interno cada cierto intervalo
+// setInterval(async () => {
+//   try {
+//     // Realiza una solicitud de ping interno a tu propia aplicación
+//     const response = await axios.get('https://labosimutrade-1.onrender.com/ping'); // Ajusta la URL según tu configuración
+//     if (response.status === 200 && response.data === 'Ping OK') {
+//       console.log('Ping interno exitoso. La aplicación está activa.');
+//     } else {
+//       console.error('Error en el ping interno. La aplicación puede estar inactiva.');
+//       // Toma medidas para reiniciar la aplicación o notificar si algo sale mal
+//     }
+//   } catch (error) {
+//     console.error('Error en el ping interno:', error.message);
+//     // Maneja cualquier error que pueda ocurrir durante el ping
+//   }
+// }, pingInterval);
 
   
 
