@@ -3,10 +3,15 @@ import buy2_2wEth from "../strategies/whales/wEth/equals/weth2_2/buy2_2wEth.js";
 import buy2_2weth130 from "../strategies/whales/wEth/equals/weth2_2_130/buy2_2wEth130.js";
 import buy3_3wEth from "../strategies/whales/wEth/equals/weth3_3/buy3_3wEth.js";
 import buy3_3weth130 from "../strategies/whales/wEth/equals/weth3_3_130/buy3_3wEth130.js";
+import buy12_3wEth from "../strategies/whales/wEth/multiplys/weth12_3/buy12_3wEth.js";
+import buy12_4wEth from "../strategies/whales/wEth/multiplys/weth12_4/buy12_4wEth.js";
+import buy13_3wEth from "../strategies/whales/wEth/multiplys/weth13_3/buy13_3wEth.js";
+import buy13_4wEth from "../strategies/whales/wEth/multiplys/weth13_4/buy13_4wEth.js";
 import buy6_2wEth from "../strategies/whales/wEth/multiplys/weth6_2/buy6_2wEth.js";
 import buy6_3wEth from "../strategies/whales/wEth/multiplys/weth6_3/buy6_3wEth.js";
 import buy9_2wEth from "../strategies/whales/wEth/multiplys/weth9_2/buy9_2wEth.js";
 import buy9_3wEth from "../strategies/whales/wEth/multiplys/weth9_3/buy9_3wEth.js";
+import buy9_4wEth from "../strategies/whales/wEth/multiplys/weth9_4/buy9_4wEth.js";
 import isOperationInTable from "../utils/isOperationInTable.js";
 
 const buyListeners = async () => {
@@ -62,6 +67,35 @@ const buyListeners = async () => {
     const isOperation9_3wEth = await isOperationInTable("9_3weth");
 
     if (isOperation9_3wEth === 'SELL') await buy9_3wEth(); 
+
+
+    const isOperation9_4wEth = await isOperationInTable("9_4weth");
+
+    if (isOperation9_4wEth === 'SELL') await buy9_4wEth(); 
+
+
+
+    const isOperation12_3wEth = await isOperationInTable("12_3weth");
+
+    if (isOperation12_3wEth === 'SELL') await buy12_3wEth(); 
+
+
+
+    const isOperation12_4wEth = await isOperationInTable("12_4weth");
+
+    if (isOperation12_4wEth === 'SELL') await buy12_4wEth(); 
+
+
+
+    const isOperation13_3wEth = await isOperationInTable("13_3weth");
+
+    if (isOperation13_3wEth === 'SELL') await buy13_3wEth(); 
+
+
+    const isOperation13_4wEth = await isOperationInTable("13_4weth");
+
+    if (isOperation13_4wEth === 'SELL') await buy13_4wEth(); 
+
 
 
 }
